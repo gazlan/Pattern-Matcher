@@ -1,0 +1,429 @@
+
+
+Test no 1	-- Error in literal
+	'abcd
+	
+
+
+Test no 2	-- A lot of braces
+	([]())
+	
+
+
+Test no 3	-- One more braces
+	('a'|'b')('c'|'d')
+	bc
+
+
+Test no 4	-- Any of
+	{abcdef}
+	e
+
+
+Test no 5	-- Any of
+	{abcdef}
+	x
+
+
+Test no 6	-- Any of
+	{}
+	e
+
+
+Test no 7	-- Any of
+	${a}:
+	ax
+
+
+Test no 8	-- Any of
+	${.;,,,}:
+	;.,,x
+
+
+Test no 9	-- Any of
+	{abcd()
+	
+
+
+Test no 10	-- Skipping alternatives
+	'a'|'b'|'c'
+	a
+
+
+Test no 11	-- Something new
+	('a'|'b')^^('c'|'d')
+	bc
+
+
+Test no 12	-- Error in braces
+	(['a')|('b'|))
+	
+
+
+Test no 13	-- Error in braces
+	(('a')|('b'|)
+	
+
+
+Test no 14	-- Braces sequence
+	('a'|'b')('c'|'d')
+	bc
+
+
+Test no 15	-- Separated literals
+	5'a''b'
+	aaaaab
+
+
+Test no 16	-- Noop
+	5'' 'b'
+	b
+
+
+Test no 17	-- Giant repeater
+	(('a'|999999999999900'b'))
+	
+
+
+Test no 18	-- Duplicate label
+	L1 # L1> LETTER L2 > # L1> ['a']
+	
+
+
+Test no 19	-- Unrecognized character
+	L1 (& # L1> LETTER L2 > #)
+	
+
+
+Test no 20	-- Unrecognized character outside ()
+	'a' & # L1> LETTER L2 > #)
+	a
+
+
+Test no 21	-- Unrecognized keyword
+	L1 (L2 L1>'a')
+	
+
+
+Test no 22	-- Unrecognized keyword outside ()
+	'a' L1
+	a
+
+
+Test no 23	-- Name conflict
+	 L >'a'
+	
+
+
+Test no 24	-- Assignment error
+	L='a'
+	a
+
+
+Test no 25	-- Indefinite loop
+	*['a']
+	
+
+
+Test no 26	-- Indefinite loop
+	*(Not'a')
+	
+
+
+Test no 27	-- Indefinite loop
+	$(*'a')
+	
+
+
+Test no 28	-- Circumflex
+	'^A - 1 then ^b - Quote ^o- Circumflex -^'
+	 - 1 then " - Quote /- Circumflex -^
+
+
+Test no 29	-- Select statement
+	"abc"|"def"
+	abc
+
+
+Test no 30	-- Select statement
+	"abc"|"def"
+	def
+
+
+Test no 31	-- Select statement
+	"abc"|"def"
+	c
+
+
+Test no 32	-- Square brackets
+	'a'['b']
+	a
+
+
+Test no 33	-- Square brackets
+	'a'['b']
+	ab
+
+
+Test no 34	-- Square brackets
+	'a'['b']
+	c
+
+
+Test no 35	-- Case deaf literal
+	<AbCdEf>
+	aBCdef
+
+
+Test no 36	-- Atom SUCCESS
+	'a'SUCCESS'b'
+	a
+
+
+Test no 37	-- Atom FAILURE
+	'a'FAILURE LETTER
+	aaa
+
+
+Test no 38	-- Finite repeater
+	6 'a'
+	aaaaaa
+
+
+Test no 39	-- Finite repeater
+	6 (<a>!<b>) <a>
+	aAaAbBA
+
+
+Test no 40	-- Finite repeater and select
+	(3)
+	
+
+
+Test no 41	-- 0 as repeatition count
+	0('a'|'b')'c'
+	c
+
+
+Test no 42	-- Finite repeater
+	6 (<a>!<b>) <a>
+	aAaABA
+
+
+Test no 43	-- Large finite repeater
+	71#'end'
+	12345678901234567890123456789012345678901234567890123456789012345678901end
+
+
+Test no 44	-- As little as possible and END atom
+	*LETTER END
+	word
+
+
+Test no 45	-- As little as possible with alternatives
+	* ( 'aa' | 'a') 'aa' end
+	aaa
+
+
+Test no 46	-- As little as possible failed
+	* UCL LCL LCL
+	AA1
+
+
+Test no 47	-- As little as possible matches big data
+	*%:'a'
+	1234567890123456789012345678901234567890123456789012345678901234567890123456789a
+
+
+Test no 48	-- Ellipsis
+	...'a'...'b'
+	FIRSTaSECONDb
+
+
+Test no 49	-- Ellipsis
+	...'a'...'b'
+	ab
+
+
+Test no 50	-- Ellipsis
+	..'a'..'b'
+	FIRSTaSECOND
+
+
+Test no 51	-- Ellipsis under repeater
+	*('a'...'b'):'c'
+	aSOMEbaANDbc
+
+
+Test no 52	-- As much as possible
+	$CHARACTER DIGIT
+	a1U2
+
+
+Test no 53	-- As little as possible optimized with FENCE
+	*('a'|'b'):'c'
+	aababc
+
+
+Test no 54	-- As little as possible optimized with FENCE
+	*('a'|'ab'):'a'end
+	aba
+
+
+Test no 55	-- As little as possible optimized with FENCE
+	(*('a'|'b'):'x'|'ab')
+	abaaa
+
+
+Test no 56	-- As much as possible optimized with FENCE
+	$#:'b'
+	12345b
+
+
+Test no 57	-- As much as possible optimized with FENCE
+	$%:'a'
+	12345a
+
+
+Test no 58	-- As much as possible optimized with FENCE
+	($#:'x'|'123')
+	12345b
+
+
+Test no 59	-- As much as possible optimized with FENCE
+	'12'($#:'x'|'3')
+	12345b
+
+
+Test no 60	-- As much as possible optimized with FENCE
+	'/'$(' '):
+	/  s
+
+
+Test no 61	-- Fence
+	*%'a':*%'b'
+	12a34b
+
+
+Test no 62	-- Fence
+	*%'a':*%'b'
+	aaaaa
+
+
+Test no 63	-- Not
+	Not ('a'|'b') 'c'
+	c
+
+
+Test no 64	-- Not
+	^('a'|'b')'c'
+	bc
+
+
+Test no 65	-- Not
+	*DIGIT^DIGIT
+	123ddd
+
+
+Test no 66	-- Not
+	*%^^'b'
+	aaab
+
+
+Test no 67	-- NoEmpty
+	NoEmpty ['something']
+	something
+
+
+Test no 68	-- NoEmpty
+	?['something']
+	other
+
+
+Test no 69	-- Blank atom
+	BLANK
+	  a
+
+
+Test no 70	-- Blank atom
+	BLANK
+	
+
+
+Test no 71	-- End of keyword
+	<a>_
+	a
+
+
+Test no 72	-- End of keyword
+	<a>_
+	a  
+
+
+Test no 73	-- End of keyword
+	<a>_
+	a  a
+
+
+Test no 74	-- End of keyword
+	<a>_
+	a(
+
+
+Test no 75	-- End of keyword
+	<a>_
+	a1
+
+
+Test no 76	-- End of keyword
+	_<a>
+	a1
+
+
+Test no 77	-- End of keyword
+	<b>_<a>
+	b  a
+
+
+Test no 78	-- End of keyword
+	<b>_<a>
+	ba
+
+
+Test no 79	-- Recoursive Call
+	Balanced>('{'[Balanced]'}')
+	{{}}
+
+
+Test no 80	-- Recoursive Call
+	Balanced>('{'[Balanced]'}')
+	{{}{
+
+
+Test no 81	-- Recoursive Call
+	*%:Balanced>('{'*(Balanced|%):'}')
+	ab{c{de}f{}g}
+
+
+Test no 82	-- Recoursive Call
+	item>(*('['item']'|%):^^']')
+	a[b_c] d] e
+
+
+Test no 83	-- User Base = 2
+	$#:
+	010112
+
+
+Test no 84	-- User Base = 16
+	$#:
+	01f19Abcdfg
+
+
+Test no 85	-- User Base = 11
+	$#:
+	0A/
+
+
+ALL TESTS ARE OK !
+
